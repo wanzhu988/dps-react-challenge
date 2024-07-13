@@ -87,6 +87,8 @@ textarea {
 	display: inline-block;
 	border-radius: 8px;
 	box-sizing: border-box;
+	background-color: inherit;
+	color: inherit;
 }
 
 input[type='text'],

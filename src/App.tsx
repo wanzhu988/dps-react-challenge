@@ -22,6 +22,8 @@ type User = {
 
 function App() {
 	const [customers, setCustomers] = useState<Customer[]>([]);
+	const [filteredCustomers, setFilteredCustomers] = useState<Customer[]>([]);
+	const [filterText, setFilterText] = useState<string>('');
 
 	useEffect(() => {
 		const fetchCustomers = async () => {
@@ -38,13 +40,23 @@ function App() {
 				});
 
 				setCustomers(formattedCustomers);
+				setFilteredCustomers(formattedCustomers);
 			}catch (error) {
 				console.error('Error fetching data:', error);
 			}
 		};
 		fetchCustomers();
 	},[]);
-	
+
+	useEffect(() => {
+		const result = customers.filter((customer) =>
+			customer.name.toLowerCase().includes(filterText.toLowerCase()));
+		setFilteredCustomers(result);
+	}, [filterText, customers]);
+
+	const handleFilterChange = (text: string) => {
+		setFilterText(text);
+	};
 
 	return (
 		<>
@@ -55,7 +67,7 @@ function App() {
 			</div>
 			<div className="home-card">
 				<p>Your solution goes here 😊</p>
-				<CustomerTable customers={customers}/>
+				<CustomerTable customers={filteredCustomers} onFilterChange={handleFilterChange} />
 			</div>
 		</>
 	);

@@ -3,7 +3,10 @@
     align-items: center;
 }
 
-.name-filter {
+.name-filter-container .name-filter {
     width: 200px;
     height: 50px;
+    background-color: #fff; 
+    color: black; 
+    border: 1px solid black; 
 }
