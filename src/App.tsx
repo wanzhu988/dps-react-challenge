@@ -1,16 +1,50 @@
 import dpsLogo from './assets/DPS.svg';
 import './App.css';
 import CustomerTable from './components/CustomerTable/CustomerTable';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+type Customer = {
+	name: string;
+	city: string;
+	birthday: string;
+}
+
+type User = {
+	id: number;
+	firstName: string;
+	lastName: string;
+	birthDate: string;
+	address: {
+		city: string;
+	};
+  };
 
 function App() {
-	const [customers] = useState([
-		{ name: 'Alotta Fudge', city: 'New York', birthday: '1.3.1995' },
-		{ name: 'Anita Bath', city: 'Jacksonville', birthday: '7.5.1980' },
-		{ name: 'Paige Turner', city: 'Washington', birthday: '13.2.1975' },
-		{ name: 'Stan Still', city: 'Dallas', birthday: '31.10.1952' },
-		{ name: 'Terry Aki', city: 'Columbus', birthday: '3.1.1960' }
-	]);
+	const [customers, setCustomers] = useState<Customer[]>([]);
+
+	useEffect(() => {
+		const fetchCustomers = async () => {
+			try{
+				const response = await axios.get('https://dummyjson.com/users');
+				const users = response.data.users;
+
+				const formattedCustomers = users.map((user: User) => {
+					const name = `${user.firstName} ${user.lastName}`;
+					const city = user.address.city;
+					const birthday = new Date(user.birthDate).toLocaleDateString('en-GB').replace(/\//g, '.');
+
+					return { name, city, birthday };
+				});
+
+				setCustomers(formattedCustomers);
+			}catch (error) {
+				console.error('Error fetching data:', error);
+			}
+		};
+		fetchCustomers();
+	},[]);
+	
 
 	return (
 		<>
