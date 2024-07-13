@@ -1,0 +1,36 @@
+.customer-table-container {
+    border: 2px solid black;
+    padding: 20px;
+    margin: auto;
+    width: 80%;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.filters-container {
+    display: flex;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.data-table {
+    width: 100%;
+    border: 2px solid black;
+    background-color: white;
+    border-radius: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.data-table th{
+    padding: 16px;
+    text-align: left;
+    border-bottom: 2px solid black;
+    font-weight: bold;
+}
+
+.data-table tbody tr td {
+    padding: 16px;
+    text-align: left;
+}
+

@@ -1,0 +1,9 @@
+.city-filter-container {
+    margin-right: 20px;
+    align-items: center;
+}
+
+.city-filter {
+    width: 200px;
+    height: 50px;
+}

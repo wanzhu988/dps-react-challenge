@@ -1,0 +1,8 @@
+.high-light-check-box-container {
+    display: flex;
+    align-items: end;
+}
+
+.high-light-check-box {
+    height: 40px;
+}

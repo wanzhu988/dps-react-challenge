@@ -1,0 +1,9 @@
+.name-filter-container {
+    margin-right: 20px;
+    align-items: center;
+}
+
+.name-filter {
+    width: 200px;
+    height: 50px;
+}
