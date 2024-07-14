@@ -2,12 +2,12 @@ import React from 'react';
 import './NameFilter.css';
 
 type NameFilterProps = {
-	onFilterChange: (filterText: string) => void;
+	onNameChange: (name: string) => void;
 }
 
-const NameFilter= ({ onFilterChange }: NameFilterProps) => {
-	const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		onFilterChange(event.target.value);
+const NameFilter= ({ onNameChange }: NameFilterProps) => {
+	const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		onNameChange(event.target.value);
 	};
 	return (
 		<div className="name-filter-container">
@@ -16,7 +16,7 @@ const NameFilter= ({ onFilterChange }: NameFilterProps) => {
 				type="text"
 				placeholder="Name"
 				className="name-filter"
-				onChange={handleFilterChange}
+				onChange={handleNameChange}
 			/>
 		</div>
 

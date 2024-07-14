@@ -23,7 +23,9 @@ type User = {
 function App() {
 	const [customers, setCustomers] = useState<Customer[]>([]);
 	const [filteredCustomers, setFilteredCustomers] = useState<Customer[]>([]);
-	const [filterText, setFilterText] = useState<string>('');
+	const [filterName, setFilterName] = useState<string>('');
+	const [filterCity, setFilterCity] = useState<string>('');
+	const [cities, setCities] = useState<string[]>([]);
 
 	useEffect(() => {
 		const fetchCustomers = async () => {
@@ -40,7 +42,9 @@ function App() {
 				});
 
 				setCustomers(formattedCustomers);
-				setFilteredCustomers(formattedCustomers);
+
+				const citiesOptions = Array.from(new Set(users.map((user: User) => user.address.city))) as string[];
+				setCities(citiesOptions);
 			}catch (error) {
 				console.error('Error fetching data:', error);
 			}
@@ -49,13 +53,20 @@ function App() {
 	},[]);
 
 	useEffect(() => {
-		const result = customers.filter((customer) =>
-			customer.name.toLowerCase().includes(filterText.toLowerCase()));
+		const result = customers.filter((customer) => {
+			const matcheName = customer.name.toLowerCase().includes(filterName.toLowerCase());
+			const matcheCity = filterCity ? customer.city === filterCity : true;
+			return matcheName && matcheCity;
+		});
 		setFilteredCustomers(result);
-	}, [filterText, customers]);
+	}, [customers, filterName, filterCity]);
 
-	const handleFilterChange = (text: string) => {
-		setFilterText(text);
+	const handleNameChange = (name: string) => {
+		setFilterName(name);
+	};
+
+	const handleCityChange = (city: string) => {
+		setFilterCity(city);
 	};
 
 	return (
@@ -67,7 +78,11 @@ function App() {
 			</div>
 			<div className="home-card">
 				<p>Your solution goes here 😊</p>
-				<CustomerTable customers={filteredCustomers} onFilterChange={handleFilterChange} />
+				<CustomerTable 
+					customers={filteredCustomers} 
+					onNameChange={handleNameChange}
+					onCityChange={handleCityChange}
+					cities={cities} />
 			</div>
 		</>
 	);

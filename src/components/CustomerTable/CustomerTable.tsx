@@ -12,15 +12,17 @@ type Customer = {
 
 type CustomerTableProps = {
 	customers: Customer[];
-	onFilterChange: (filterText: string) => void;
+	onNameChange: (name: string) => void;
+	onCityChange: (city: string) => void;
+	cities: string[];
 }
 
-const CustomerTable: React.FC<CustomerTableProps> = ({ customers, onFilterChange }) => {
+const CustomerTable = ({ customers, onNameChange, onCityChange, cities }: CustomerTableProps) => {
 	return (
 		<div className="customer-table-container">
 			<div className="filters-container">
-				<NameFilter onFilterChange={onFilterChange} />
-				<CityFilter />
+				<NameFilter onNameChange={onNameChange} />
+				<CityFilter cities={cities} onCityChange={onCityChange}/>
 				<HighLightCheckbox />
 			</div>
 			<div className="data-table-container">
