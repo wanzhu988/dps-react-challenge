@@ -74,6 +74,10 @@ function App() {
 			result.forEach(customer => {
 				customer.highlight = customer === oldestCustomers.get(customer.city);
 			});
+		} else {
+			result.forEach(customer => {
+				customer.highlight = false;
+			});
 		}
 
 		setFilteredCustomers(result);
