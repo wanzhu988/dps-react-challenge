@@ -11,14 +11,18 @@ const HighLightCheckbox = ({ onCheckboxChange }: HighLightCheckboxProps) => {
   
 	return (
 		<div className="high-light-check-box-container">
-			<label className="check-box-label">
-				Highlight oldest per city
-			</label>
-			<input 
-				type="checkbox" 
-				className="high-light-check-box"
-				onChange={handleCheckboxChange}
-			/>
+			<div className="check-box-span-container">
+				<span>Highlight oldest</span> <br/>
+				<span>per city</span>
+			</div>
+			<div className='high-light-check-box'> 
+				<input 
+					type="checkbox" 
+					className='check-box'
+					onChange={handleCheckboxChange}
+				/>
+			</div>
+
 		</div>
 
 	);

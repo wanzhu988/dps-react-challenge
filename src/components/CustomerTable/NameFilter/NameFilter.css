@@ -1,10 +1,13 @@
 .name-filter-container {
-    margin-right: 20px;
-    align-items: center;
+    width: 220px;
+    margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .name-filter-container .name-filter {
-    width: 200px;
+    width: 100%;
     height: 50px;
     background-color: #fff; 
     color: black; 
