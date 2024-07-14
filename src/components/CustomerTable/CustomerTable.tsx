@@ -8,6 +8,7 @@ type Customer = {
 	name: string;
 	city: string;
 	birthday: string;
+	highlight?: boolean;
 }
 
 type CustomerTableProps = {
@@ -15,15 +16,16 @@ type CustomerTableProps = {
 	onNameChange: (name: string) => void;
 	onCityChange: (city: string) => void;
 	cities: string[];
+	onCheckboxChange: (highlight: boolean) => void;
 }
 
-const CustomerTable = ({ customers, onNameChange, onCityChange, cities }: CustomerTableProps) => {
+const CustomerTable = ({ customers, onNameChange, onCityChange, cities, onCheckboxChange }: CustomerTableProps) => {
 	return (
 		<div className="customer-table-container">
 			<div className="filters-container">
 				<NameFilter onNameChange={onNameChange} />
 				<CityFilter cities={cities} onCityChange={onCityChange}/>
-				<HighLightCheckbox />
+				<HighLightCheckbox onCheckboxChange={onCheckboxChange}/>
 			</div>
 			<div className="data-table-container">
 				<table className="data-table">
@@ -36,7 +38,7 @@ const CustomerTable = ({ customers, onNameChange, onCityChange, cities }: Custom
 					</thead>
 					<tbody>
 						{customers.map((customer, index) => (
-							<tr key={index}>
+							<tr key={index} className={customer.highlight ? 'highlight' : ''}>
 								<td>{customer.name}</td>
 								<td>{customer.city}</td>
 								<td>{customer.birthday}</td>

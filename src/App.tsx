@@ -8,6 +8,7 @@ type Customer = {
 	name: string;
 	city: string;
 	birthday: string;
+	highlight?: boolean;
 }
 
 type User = {
@@ -26,6 +27,7 @@ function App() {
 	const [filterName, setFilterName] = useState<string>('');
 	const [filterCity, setFilterCity] = useState<string>('');
 	const [cities, setCities] = useState<string[]>([]);
+	const [highlightOldestCustomers, setHighlightOldestCustomers] = useState<boolean>(false);
 
 	useEffect(() => {
 		const fetchCustomers = async () => {
@@ -58,8 +60,24 @@ function App() {
 			const matcheCity = filterCity ? customer.city === filterCity : true;
 			return matcheName && matcheCity;
 		});
+
+		if (highlightOldestCustomers) {
+			const oldestCustomers = new Map<string, Customer>();
+
+			result.forEach(customer => {
+				const birthDate = new Date(customer.birthday.split('.').reverse().join('-'));
+				if (!oldestCustomers.has(customer.city) || birthDate < new Date(oldestCustomers.get(customer.city)!.birthday.split('.').reverse().join('-'))) {
+					oldestCustomers.set(customer.city, customer);
+				}
+			});
+
+			result.forEach(customer => {
+				customer.highlight = customer === oldestCustomers.get(customer.city);
+			});
+		}
+
 		setFilteredCustomers(result);
-	}, [customers, filterName, filterCity]);
+	}, [customers, filterName, filterCity, highlightOldestCustomers]);
 
 	const handleNameChange = (name: string) => {
 		setFilterName(name);
@@ -68,6 +86,11 @@ function App() {
 	const handleCityChange = (city: string) => {
 		setFilterCity(city);
 	};
+
+	const handleCheckboxChange = (highlight: boolean) => {
+		setHighlightOldestCustomers(highlight);
+	};
+	
 
 	return (
 		<>
@@ -82,6 +105,7 @@ function App() {
 					customers={filteredCustomers} 
 					onNameChange={handleNameChange}
 					onCityChange={handleCityChange}
+					onCheckboxChange={handleCheckboxChange}
 					cities={cities} />
 			</div>
 		</>
